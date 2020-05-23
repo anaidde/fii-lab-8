@@ -13,3 +13,8 @@
 	* Am interfata AlbumChartController, cu metoda de create. Aceasta imi returneaza o lista de albume.
 	* Am si metoda de printare a chartului.
 	* In metoda de printare, obiectele sunt ordonate dupa pozitia lor in chart.
+* Bonus: 
+	* Am implementat clasa ConnectionPool
+	* Am implementat clasa MyThreadPoolExecutor
+	* Am implementat clasa ArtistThread
+	* Intr-un for, am creat 15 thread-uri executate de MyThreadPoolExecutor folosind ConnectionPool pentru a executa un query din baza de date.

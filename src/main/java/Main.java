@@ -3,16 +3,24 @@ import Albums.AlbumDAO;
 import Artists.Artist;
 import Artists.ArtistsDAO;
 import Chart.AlbumChartDAO;
+import DB.ArtistThread;
+import DB.ConnectionPool;
+import DB.MyThreadPoolExecutor;
 import com.github.javafaker.Faker;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import java.beans.PropertyVetoException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException {
+    public static <PooledConnectionDataSource> void main(String[] args) throws SQLException, PropertyVetoException {
         AlbumDAO album = new AlbumDAO();
         ArtistsDAO artist = new ArtistsDAO();
         AlbumChartDAO albumChart = new AlbumChartDAO();
@@ -31,12 +39,12 @@ public class Main {
         List<Artist> artistList = new ArrayList<>();
 
         albumList = album.findByArtist(2);
-        for(Album album1 : albumList) {
+        for (Album album1 : albumList) {
             System.out.println(album1);
         }
 
         artistList = artist.findByName("RHCP");
-        for(Artist artist1 : artistList) {
+        for (Artist artist1 : artistList) {
             System.out.println(artist1);
         }
 
@@ -50,5 +58,15 @@ public class Main {
         albumChart.createChart(albums);
         albumChart.showChart();
 
+        MyThreadPoolExecutor threadPoolExecutor = (MyThreadPoolExecutor) Executors.newFixedThreadPool(15);
+
+
+        for (int i = 1; i <= 15; i++) {
+            Runnable artistThread = new ArtistThread(i);
+            threadPoolExecutor.execute(artistThread);
+            artistThread.run();
+        }
+
     }
+
 }

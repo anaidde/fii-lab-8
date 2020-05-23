@@ -7,9 +7,9 @@ public class Database {
     private static Connection connection = null;
     private Database() throws SQLException {
         connection = DriverManager.getConnection(
-                "jdbc:mysql://sergiu-mysql-server.mysql.database.azure.com/DianaDB?" +
-                        "user=Fiscal_Documents_EDI_User@sergiu-mysql-server&" +
-                        "password=Fiscal_Documents_EDI_Password");
+                "jdbc:mysql://79.112.59.146:3307/music_albums_diana?" +
+                        "user=dbadiana&" +
+                        "password=pass");
 
     }
 
